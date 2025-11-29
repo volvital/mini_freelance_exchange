@@ -5,27 +5,27 @@ export const store = createStore({
 		return {
 			visible: true,
 			tasks: [
-			{
-				id: 1234567890,
-				name: 'Головна задача',
-				status: {
-					title: 'Активна',
-					type: 'warning'
+				{
+					id: 1234567890,
+					name: 'Головна задача',
+					status: {
+						title: 'Активна',
+						type: 'primary'
+					},
+					deadline: new Date().toLocaleDateString(),
+					description: 'Це головна задача'
 				},
-				deadline: new Date().toLocaleDateString(),
-				description: 'Це головна задача'
-			},
-			{
-				id: 987654321,
-				name: 'Друга задача',
-				status: {
-					title: 'Завершена',
-					type: 'primary'
-				},
-				deadline: new Date().toLocaleDateString(),
-				description: 'Це друга головна задача'
-			}
-		]
+				{
+					id: 987654321,
+					name: 'Друга задача',
+					status: {
+						title: 'Завершена',
+						type: 'primary'
+					},
+					deadline: new Date().toLocaleDateString(),
+					description: 'Це друга головна задача'
+				}
+			]
 		}
 	},
 	mutations: {},
@@ -37,7 +37,10 @@ export const store = createStore({
 		getTasks(state) {
 			return state.tasks
 		},
-		getActiveTasks(state) {
+		getAmountOfTasks(state) {
+			return state.tasks.length
+		},
+		getAmountOfActiveTasks(state) {
 			return state.tasks.filter(item => item.status.title === 'Активна').length
 		},
 		getCurrentTask: (state) => (id) => {

@@ -1,6 +1,5 @@
 <template>
-  <h1 class="text-white center" v-if="tasks.lenght">Задач поки нема</h1>
-	<div v-else>
+	<div v-if="amtTasks">
 		<h3 class="text-white">Всього активних задач: {{ activeTasks }}</h3>
 		<ul>
 			<li v-for="task in tasks" :key="task.id">
@@ -21,6 +20,9 @@
 			</li>
 		</ul>
 	</div>
+	<div v-else>
+		<h1 class="text-white center">Задач поки нема</h1>
+	</div>
 </template>
 
 <script>
@@ -35,12 +37,14 @@ export default {
 		const store = useStore()
 		const navigate = (id) => router.push('/task/' + id)
 		const tasks = store.getters.getTasks
+		const amtTasks = store.getters.getAmountOfTasks
 		const activeTasks = computed(() => {
-			return store.getters.getActiveTasks
+			return store.getters.getAmountOfActiveTasks
 		})
 		
 		return {
 			tasks,
+			amtTasks,
 			navigate,
 			activeTasks
 		}
