@@ -11,7 +11,7 @@
 					<p>
 						<strong>
 							<small>
-								{{new Date().toLocaleDateString() }}
+								{{ task.deadline.split('-').reverse().join('.') }}
 							</small>
 						</strong>
 					</p>
@@ -36,7 +36,7 @@ export default {
 		const router = useRouter()
 		const store = useStore()
 		const navigate = (id) => router.push('/task/' + id)
-		const tasks = store.getters.getTasks
+		const tasks = store.getters['getTasks']
 		const amtTasks = store.getters.getAmountOfTasks
 		const activeTasks = computed(() => {
 			return store.getters.getAmountOfActiveTasks

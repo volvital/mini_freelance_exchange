@@ -1,6 +1,10 @@
 import { createStore } from "vuex";
+import task from "./modules/task";
 
 export const store = createStore({
+	modules:{
+		task
+	},
 	state() {
 		return {
 			visible: true,
@@ -28,7 +32,11 @@ export const store = createStore({
 			]
 		}
 	},
-	mutations: {},
+	mutations: {
+		setTasks(state, payload) {
+			state.tasks.push(payload)
+		}
+	},
 	actions: {},
 	getters: {
 		getIsVisible(state) {

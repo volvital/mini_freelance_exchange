@@ -2,12 +2,12 @@
   <div class="card" v-if="task.id.toString() === id">
     <h2>{{ task.name }}</h2>
     <p><strong>Статус</strong>: <AppStatus :status="task.status" /></p>
-    <p><strong>Дэдлайн</strong>: {{ task.deadline }}</p>
+    <p><strong>Дэдлайн</strong>: {{ task.deadline.split('-').reverse().join('.') }}</p>
     <p><strong>Опис</strong>: {{ task.description }}</p>
     <div>
-      <button class="btn">Взяти до работи</button>
-      <button class="btn primary">Завершити</button>
-      <button class="btn danger">Відмінити</button>
+      <button class="btn" @click="changeStatus">Взяти до работи</button>
+      <button class="btn primary" @click="finishTask">Завершити</button>
+      <button class="btn danger" @click="cancelTask">Відмінити</button>
     </div>
   </div>
   <h3 class="text-white center" v-else>
@@ -26,9 +26,24 @@ export default {
 		const route = useRoute()
 		const id = route.params.id
 		const task = store.getters.getCurrentTask(id)
+		const changeStatus = () => {
+			task.status.type = 'warning'
+			task.status.title = 'Виконується'
+		}
+		const finishTask = () => {
+			task.status.type = 'primary'
+			task.status.title = 'Завершено'
+		}
+		const cancelTask = () => {
+			task.status.type = 'danger'
+			task.status.title = 'Відмінена'
+		}
 		return {
 			task,
-			id
+			id,
+			changeStatus,
+			finishTask,
+			cancelTask
 		}
 	},
   components: {AppStatus}
