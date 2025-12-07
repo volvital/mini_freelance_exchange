@@ -21,21 +21,20 @@
 </template>
 
 <script>
-import { onMounted, computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 export default {
 	setup() {
 		const store = useStore()
+		const router = useRouter()
 		onMounted(() => {
 			store.commit('task/resetTask')
 		})
-		const router = useRouter()
-		const task = store.getters['task/getTask']
 		const name = computed({
 				get () {
-					return store.state.task.task.name
+					return store.state.task.name
 				},
 				set (value) {
 					store.commit('task/updateTaskName', value)
@@ -43,7 +42,7 @@ export default {
 		})
 		const deadline = computed({
 				get () {
-					return store.state.task.task.deadline
+					return store.state.task.deadline
 				},
 				set (value) {
 					store.commit('task/updateTaskDeadline', value)
@@ -51,7 +50,7 @@ export default {
 		})
 		const description = computed({
 				get () {
-					return store.state.task.task.description
+					return store.state.task.description
 				},
 				set (value) {
 					store.commit('task/updateTaskDescription', value)
@@ -59,10 +58,17 @@ export default {
 		})
 		const visible = computed({
 			get() {
-				return !!name.value.length && !!deadline.value.length && !!description.value.length
+				return name.value !== '' && !!deadline.value && description.value !== ''
 			}
 		})
 		const saveNewTask = () => {
+			const task = {
+        id: Date.now().toString(),
+        name: name.value,
+        deadline: new Date(deadline.value).setHours(23,59,59,999),
+        description: description.value,
+        status: new Date(deadline.value) < new Date() ? {title: 'Відмінена', type: 'danger'} : {title: 'Активна', type: 'primary'}
+      }
 			store.commit('setTasks', task)
 			router.push('/')
 		}
