@@ -29,17 +29,17 @@ export default {
 		const changeStatus = () => {
 			task.status.type = 'warning'
 			task.status.title = 'Виконується'
-			store.commit('saveTasks')
+			store.dispatch('saveTasks')
 		}
 		const finishTask = () => {
 			task.status.type = 'primary'
 			task.status.title = 'Завершено'
-			store.commit('saveTasks')
+			store.dispatch('saveTasks')
 		}
 		const cancelTask = () => {
 			task.status.type = 'danger'
 			task.status.title = 'Відмінена'
-			store.commit('saveTasks')
+			store.dispatch('saveTasks')
 		}
 		return {
 			task,

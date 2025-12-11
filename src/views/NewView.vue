@@ -69,7 +69,7 @@ export default {
         description: description.value,
         status: new Date(deadline.value) < new Date() ? {title: 'Відмінена', type: 'danger'} : {title: 'Активна', type: 'primary'}
       }
-			store.commit('setTasks', task)
+			store.dispatch('addTask', task)
 			router.push('/')
 		}
 		return {name, deadline, description, visible, saveNewTask}

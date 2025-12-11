@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import AppStatus from '../components/AppStatus'
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -35,9 +35,12 @@ export default {
 	setup () {
 		const router = useRouter()
 		const store = useStore()
+		onMounted(() => {
+			store.dispatch('setTasks')
+		})
 		const navigate = (id) => router.push('/task/' + id)
 		const tasks = computed(() => store.getters.getTasks)
-		const amtTasks = store.getters.getAmountOfTasks
+		const amtTasks = computed(() => store.getters.getAmountOfTasks)
 		const activeTasks = computed(() => store.getters.getAmountOfActiveTasks)
 		return {
 			tasks,
